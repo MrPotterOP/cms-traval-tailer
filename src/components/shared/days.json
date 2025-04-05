@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_shared_days",
+  "info": {
+    "displayName": "days",
+    "icon": "filter",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "briefAboutTheDay": {
+      "type": "text",
+      "required": true,
+      "minLength": 16
+    },
+    "representiveImg": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
