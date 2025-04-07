@@ -47,6 +47,11 @@ module.exports = {
         },
         {
             method: 'GET',
+            path: '/apiHome/months',
+            handler: 'apihome.listMonths'
+        },
+        {
+            method: 'GET',
             path: '/apiHome/search/:query',
             handler: 'apihome.search'
         },

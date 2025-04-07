@@ -11,7 +11,7 @@ const transformExperience = (experience) => {
         highlight: experience.highlight ? {
             title: experience.highlight.title,
             brief: experience.highlight.brief,
-            imgUrl: experience.highlight.img?.url || DEFAULT_IMAGE // Adjust if highlight has an image field
+            imgUrl: experience.highlight.img?.formats.large?.url || experience.highlight.img?.url || DEFAULT_IMAGE 
         } : null,
     };
 }

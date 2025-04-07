@@ -5,7 +5,7 @@ const { transformDestination } = require('../../../../libs/transformDestination.
 const { transformMonth } = require('../../../../libs/transformMonth.js');
 const { destination } = require('../controllers/apihome.js');
 const { transformExperience } = require('../../../../libs/transformExperience.js');
-const { transformDestinationList, transformExperienceList, transformTourList } = require('../../../../libs/transformLists.js');
+const { transformDestinationList, transformExperienceList, transformTourList, transformMonthList } = require('../../../../libs/transformLists.js');
 const { serchCardBlog, serchCardDestination, serchCardExperience, serchCardTour } = require('../../../../libs/transformSearch.js');
 const { transformBlog } = require('../../../../libs/transformBlog.js');
 
@@ -25,9 +25,7 @@ module.exports = {
                         tour: {
                             fields: ['slug']
                         },
-                        heroImg: {
-                            fields: ['url']
-                        }
+                        heroImg: "*",
                     }
                 }
             },
@@ -40,7 +38,7 @@ module.exports = {
         const result = allSlides.map(slide => ({
             title: slide.title,
             description: slide.description,
-            imgUrl: slide.heroImg?.url || DEFAULT_IMAGE,
+            imgUrl: slide.heroImg?.formats?.large?.url || DEFAULT_IMAGE,
             url: slide.tour?.slug ? `/tours/${slide.tour.slug}` : `/destinations/${(slide.destination?.slug || "")}`
         }));
 
@@ -411,6 +409,27 @@ module.exports = {
             list: transformTourList(listTour)
         };
     },
+
+    async getListMonths() {
+        const listMonths = await strapi.documents('api::month.month').findMany({
+            limit: 12,
+            populate: {
+                displayImg: {
+                    fields: ["url"]
+                },
+                fields: ["month"]
+            },
+            status: 'published'
+        });
+        
+        if (!listMonths) {
+            throw new Error("List months not found.");
+        }
+        return {
+            list: transformMonthList(listMonths)
+        };
+    },
+
 
 
     async getSearch(query) {

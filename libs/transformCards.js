@@ -7,7 +7,7 @@ const transformBlog = (blog) => ({
     slug: blog.slug,
     title: blog.title,
     description: blog.description || null,
-    imgUrl: blog.displayImg?.url || DEFAULT_IMAGE
+    imgUrl: blog.displayImg?.formats?.large?.url || blog.displayImg?.url || DEFAULT_IMAGE,
 });
 
 // Destination transformation
@@ -15,21 +15,21 @@ const transformDestination = (destination) => ({
     slug: destination.slug,
     title: destination.title,
     description: destination.description || null,
-    imgUrl: destination.displayImg?.url || DEFAULT_IMAGE,
+    imgUrl: destination.displayImg?.formats?.large?.url || destination.displayImg?.url || DEFAULT_IMAGE,
     tag: destination.startingPrice ? destination.startingPrice : 10000
 });
 
 // Experience transformation
 const transformExperience = (experience) => ({
     title: experience.title,
-    imgUrl: experience.heroImg?.url || DEFAULT_IMAGE,
+    imgUrl: experience.heroImg?.formats?.large?.url || experience.heroImg?.url || DEFAULT_IMAGE,
     slug: experience.slug
 });
 
 // Spotlight transformation
 const transformSpotlight = (spotlight) => ({
     title: spotlight.title,
-    imgUrl: spotlight.displayImg?.url || DEFAULT_IMAGE,
+    imgUrl: spotlight.displayImg?.formats?.large?.url || spotlight.displayImg?.url || DEFAULT_IMAGE,
     description: spotlight.description || null,
     link: spotlight.tour 
         ? `/tours/${spotlight.tour.slug}` 
@@ -42,7 +42,7 @@ const transformSpotlight = (spotlight) => ({
 const transformTour = (tour) => ({
     slug: tour.slug,
     title: tour.title,
-    imgUrl: tour.displayImg?.url || DEFAULT_IMAGE,
+    imgUrl: tour.displayImg?.formats?.large?.url || tour.displayImg?.url || DEFAULT_IMAGE,
     nights: tour.priceTime ? tour.priceTime.nights || null : null,
     description: tour.description || null
 });
@@ -50,7 +50,7 @@ const transformTour = (tour) => ({
 // Months 
 const transformMonth = (month) => ({
     month: month.month,
-    imgUrl: month.displayImg?.url || DEFAULT_IMAGE
+    imgUrl: month.displayImg?.formats?.medium?.url || month.displayImg?.url || DEFAULT_IMAGE,
 });
 
 // Reviews

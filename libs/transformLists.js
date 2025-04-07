@@ -11,7 +11,7 @@ const transformDestinationList = (listDestination) => {
             destinations: (group.destinations || []).map(destination => ({
                 title: destination.title,
                 slug: destination.slug,
-                imgUrl: destination.displayImg?.url || DEFAULT_IMAGE
+                imgUrl: destination.displayImg?.formats.medium?.url || destination.displayImg?.url || DEFAULT_IMAGE
             }))
         }))
     );
@@ -27,7 +27,7 @@ const transformExperienceList = (listExperience) => {
             experiences: (group.experiences || []).map(experience => ({
                 title: experience.title,
                 slug: experience.slug,
-                imgUrl: experience.heroImg?.url || DEFAULT_IMAGE
+                imgUrl: experience.heroImg?.formats.medium?.url || experience.heroImg?.url || DEFAULT_IMAGE
             }))
         }))
     );
@@ -43,10 +43,25 @@ const transformTourList = (listTour) => {
             tours: (group.tours || []).map(tour => ({
                 title: tour.title,
                 slug: tour.slug,
-                imgUrl: tour.displayImg?.url || DEFAULT_IMAGE
+                imgUrl: tour.displayImg?.formats.medium?.url || tour.displayImg?.url || DEFAULT_IMAGE
             }))
         }))
     );
+};
+
+const transformMonthList = (months) => {
+    if (!months || !Array.isArray(months)) return [];
+
+    const rawMonths = months.map(month => ({
+        month: month.month,
+        imgUrl:  month.displayImg?.formats?.medium?.url || month.displayImg?.url || DEFAULT_IMAGE
+    }));
+
+    // Sort months like january, february, march ans so on
+    return rawMonths.sort((a, b) => {
+        const monthOrder = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+        return monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month);
+    });
 }
 
 
@@ -55,5 +70,6 @@ const transformTourList = (listTour) => {
 module.exports = {
     transformDestinationList,
     transformExperienceList,
-    transformTourList
+    transformTourList,
+    transformMonthList
 }

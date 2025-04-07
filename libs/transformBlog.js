@@ -6,7 +6,7 @@ const transformBlog = (blog) => {
     return {
         title: blog.title,
         description: blog.description,
-        displayImg: blog.displayImg?.url || DEFAULT_IMAGE,
+        displayImg: blog.displayImg?.formats?.large?.url || blog.displayImg?.url || DEFAULT_IMAGE,
         body: blog.body,
         seo: {
             metaTitle: blog.seo?.metaTitle,

@@ -121,6 +121,18 @@ module.exports = {
         }
     },
 
+    async listMonths(ctx) {
+        try {
+            const listMonths = await strapi.service('api::api-home.apihome').getListMonths();
+            ctx.body = listMonths;
+        } catch (e) {
+            ctx.status = 500;
+            console.log(e);
+
+            ctx.body = {error: "Failed to load list months"};
+        }
+    },
+
     async search(ctx) {
         try {
             const search = await strapi.service('api::api-home.apihome').getSearch(ctx.params.query);

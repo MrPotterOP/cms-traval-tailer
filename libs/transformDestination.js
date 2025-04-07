@@ -6,12 +6,12 @@ const transformDestination = (destination) => {
     return {
         title: destination.title,
         description: destination.description,
-        displayImg: destination.displayImg?.url || DEFAULT_IMAGE,
+        displayImg: destination.displayImg?.formats?.large?.url || destination.displayImg?.url || DEFAULT_IMAGE,
         slug: destination.slug,
         highlight: destination.highlight ? {
             title: destination.highlight.title,
             brief: destination.highlight.brief,
-            imgUrl: destination.highlight.img?.url || DEFAULT_IMAGE // Adjust if highlight has an image field
+            imgUrl: destination.highlight.img?.formats.large?.url || destination.highlight.img?.url || DEFAULT_IMAGE // Adjust if highlight has an image field
         } : null,
         heroImg: destination.heroImg?.url || DEFAULT_IMAGE
     };

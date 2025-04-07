@@ -29,10 +29,10 @@ const transformTour = (tour) => {
             nights: tour.priceTime?.nights || null
         },
         brief: tour.brief || null,
-        displayImg: tour.displayImg?.url || DEFAULT_IMAGE,
+        displayImg: tour.displayImg?.formats?.medium?.url || tour.displayImg?.url || DEFAULT_IMAGE,
         days: (tour.days || []).map(day => ({
             brief: day.briefAboutTheDay,
-            imgUrl: day.representiveImg?.url || DEFAULT_IMAGE // Assuming days might have an image; adjust if not present
+            imgUrl: day.representiveImg?.formats?.large?.url || day.representiveImg?.url || DEFAULT_IMAGE // Assuming days might have an image; adjust if not present
         })),
         inclusions: tour.inclusions ? {
             included: (tour.inclusions.included || []).map(item => item.included),

@@ -10,7 +10,7 @@ const transformMonth = (month) => {
         highlight: month.highlight ? {
             title: month.highlight.title,
             brief: month.highlight.brief,
-            imgUrl: month.highlight?.img?.url || DEFAULT_IMAGE
+            imgUrl: month.highlight?.img?.formats?.large?.url || month.highlight?.img?.url || DEFAULT_IMAGE
         } : null,
     };
 }
