@@ -3,6 +3,14 @@ const DEFAULT_IMAGE = process.env.DEFAULT_IMAGE;
 const transformBlog = (blog) => {
     if (!blog) return null;
 
+    const author = () =>{
+        if(blog.createdBy){
+            return `${blog.createdBy?.firstname} ${blog.createdBy?.lastname}`
+        }else {
+            return "Admin - Travel Tailor"
+        }
+    }
+
     return {
         title: blog.title,
         description: blog.description,
@@ -13,7 +21,7 @@ const transformBlog = (blog) => {
             metaDescription: blog.seo?.metaDescription,
             shareImage: blog.seo?.shareImage?.url || DEFAULT_IMAGE
         },
-        author: `${blog.createdBy?.firstname} ${blog.createdBy?.lastname}` || "Admin - Travel Tailor",
+        author: author(),
         createdAt: blog.createdAt,
         updatedAt: blog.updatedAt || blog.createdAt,
         slug: blog.slug,
