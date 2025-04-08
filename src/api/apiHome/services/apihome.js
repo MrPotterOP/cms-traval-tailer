@@ -38,7 +38,7 @@ module.exports = {
         const result = allSlides.map(slide => ({
             title: slide.title,
             description: slide.description,
-            imgUrl: slide.heroImg?.formats?.large?.url || DEFAULT_IMAGE,
+            imgUrl: slide.heroImg?.url || DEFAULT_IMAGE,
             url: slide.tour?.slug ? `/tours/${slide.tour.slug}` : `/destinations/${(slide.destination?.slug || "")}`
         }));
 
@@ -338,9 +338,7 @@ module.exports = {
                         destinations: {
                             fields: ["title", "slug"], 
                             populate: {
-                                displayImg: {
-                                    fields: ["url"]
-                                }
+                                displayImg: "*"
                             }
                         }
                     }
@@ -365,9 +363,7 @@ module.exports = {
                         experiences: {
                             fields: ["title", "slug"], 
                             populate: {
-                                heroImg: {
-                                    fields: ["url"]
-                                }
+                                heroImg: "*"
                             }
                         }
                     }
@@ -392,9 +388,7 @@ module.exports = {
                         tours: {
                             fields: ["title", "slug"], 
                             populate: {
-                                displayImg: {
-                                    fields: ["url"]
-                                }
+                                displayImg: "*"
                             }
                         }
                     }
@@ -414,9 +408,7 @@ module.exports = {
         const listMonths = await strapi.documents('api::month.month').findMany({
             limit: 12,
             populate: {
-                displayImg: {
-                    fields: ["url"]
-                },
+                displayImg: "*",
                 fields: ["month"]
             },
             status: 'published'
@@ -675,7 +667,7 @@ module.exports = {
                 },
                 createdBy: {
                     fields: ["firstname", "lastname", "createdAt", "updatedAt"]
-                }
+                },
             }
         });
         if (!blog) {

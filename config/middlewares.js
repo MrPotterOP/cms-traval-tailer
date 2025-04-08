@@ -9,4 +9,15 @@ module.exports = [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'img-src': ["'self'", 'data:', 'blob:', 'https://market-assets.strapi.io', 'https://storage.googleapis.com'],
+        },
+      },
+    },
+  }
 ];

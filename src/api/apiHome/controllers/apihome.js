@@ -160,8 +160,6 @@ module.exports = {
             comment, 
             source 
         } = ctx.request.body;
-
-        console.log(ctx.request.body, "BODY");
         
 
         // Basic validation for required fields

@@ -13,9 +13,9 @@ const transformBlog = (blog) => {
             metaDescription: blog.seo?.metaDescription,
             shareImage: blog.seo?.shareImage?.url || DEFAULT_IMAGE
         },
-        author: `${blog.createdBy.firstname} ${blog.createdBy.lastname}` || "Unknown",
+        author: `${blog.createdBy?.firstname} ${blog.createdBy?.lastname}` || "Admin - Travel Tailor",
         createdAt: blog.createdAt,
-        updatedAt: blog.updatedAt,
+        updatedAt: blog.updatedAt || blog.createdAt,
         slug: blog.slug,
     };
 }
