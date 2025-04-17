@@ -6,7 +6,7 @@ const transformExperience = (experience) => {
 
     return {
         title: experience.title,
-        heroImg: experience.heroImg?.url || DEFAULT_IMAGE,
+        heroImg: experience.heroImg?.formats.large?.url || experience.heroImg?.url || DEFAULT_IMAGE,
         slug: experience.slug,
         highlight: experience.highlight ? {
             title: experience.highlight.title,

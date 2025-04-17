@@ -579,11 +579,11 @@ export interface ApiFeaturedFeatured extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    spotlights: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::spotlight.spotlight'
-    >;
     tours: Schema.Attribute.Relation<'oneToMany', 'api::tour.tour'>;
+    traveller: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::experience.experience'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -922,6 +922,7 @@ export interface ApiMonthMonth extends Struct.CollectionTypeSchema {
 export interface ApiReviewReview extends Struct.SingleTypeSchema {
   collectionName: 'reviews';
   info: {
+    description: '';
     displayName: 'Review';
     pluralName: 'reviews';
     singularName: 'review';

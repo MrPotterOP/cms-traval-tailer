@@ -1,4 +1,3 @@
-
 const { transformEntities } = require('../../../../libs/transformCards.js');
 const { transformTour } = require('../../../../libs/transformTour.js');
 const { transformDestination } = require('../../../../libs/transformDestination.js');
@@ -17,12 +16,15 @@ module.exports = {
         const heroDocuments = await strapi.documents("api::hero.hero").findMany({
             populate: {
                 heroSlide: {
-                    fields: ['title', 'description'],
+                    fields: ['title', 'description', 'CTA'],
                     populate: {
                         destination: {
                             fields: ['slug']
                         },
                         tour: {
+                            fields: ['slug']
+                        },
+                        experience: {
                             fields: ['slug']
                         },
                         heroImg: "*",
@@ -39,7 +41,8 @@ module.exports = {
             title: slide.title,
             description: slide.description,
             imgUrl: slide.heroImg?.url || DEFAULT_IMAGE,
-            url: slide.tour?.slug ? `/tours/${slide.tour.slug}` : `/destinations/${(slide.destination?.slug || "")}`
+            url: slide.tour?.slug ? `/tours/${slide.tour.slug}` : slide.destination?.slug ? `/destinations/${slide.destination.slug}` : `/experiences/${slide.experience?.slug}`,
+            CTA: slide.CTA || 'Explore'
         }));
 
         return result;
@@ -61,7 +64,7 @@ module.exports = {
                 tours: {
                     populate: "*"
                 },
-                spotlights: {
+                traveller: {
                     populate: "*"
                 }
             },
@@ -76,7 +79,7 @@ module.exports = {
             destinations: featured[0]?.destinations ? transformEntities(featured[0].destinations, 'destinations') : [],
             experiences: featured[0]?.experiences ? transformEntities(featured[0].experiences, 'experiences') : [],
             tours: featured[0]?.tours ? transformEntities(featured[0].tours, 'tours') : [],
-            spotlights: featured[0]?.spotlights ? transformEntities(featured[0].spotlights, 'spotlights') : []
+            traveller: featured[0]?.traveller ? transformEntities(featured[0].traveller, 'experiences') : [],
         };
 
         return response;
@@ -106,7 +109,7 @@ module.exports = {
         });
 
         const response = {
-            reviews: reviews[0]?.reviews ? transformEntities(reviews[0].reviews, 'reviews') : []
+            reviews: reviews[0]?.review ? transformEntities(reviews[0].review, 'reviews') : []
         };
         
 

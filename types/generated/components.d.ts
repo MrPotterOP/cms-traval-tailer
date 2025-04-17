@@ -98,6 +98,13 @@ export interface SharedHero extends Struct.ComponentSchema {
     icon: 'landscape';
   };
   attributes: {
+    CTA: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 38;
+        minLength: 2;
+      }> &
+      Schema.Attribute.DefaultTo<'Explore'>;
     description: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -107,6 +114,10 @@ export interface SharedHero extends Struct.ComponentSchema {
     destination: Schema.Attribute.Relation<
       'oneToOne',
       'api::destination.destination'
+    >;
+    experience: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::experience.experience'
     >;
     heroImg: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     title: Schema.Attribute.String &
@@ -233,6 +244,7 @@ export interface SharedQuote extends Struct.ComponentSchema {
 export interface SharedReview extends Struct.ComponentSchema {
   collectionName: 'components_shared_reviews';
   info: {
+    description: '';
     displayName: 'review';
     icon: 'quote';
   };
@@ -240,13 +252,13 @@ export interface SharedReview extends Struct.ComponentSchema {
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
-        maxLength: 60;
+        maxLength: 40;
         minLength: 3;
       }>;
     review: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
-        maxLength: 300;
+        maxLength: 370;
         minLength: 8;
       }>;
     source: Schema.Attribute.Enumeration<

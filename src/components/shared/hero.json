@@ -36,6 +36,18 @@
       "required": true,
       "maxLength": 120,
       "minLength": 4
+    },
+    "experience": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::experience.experience"
+    },
+    "CTA": {
+      "type": "string",
+      "required": true,
+      "default": "Explore",
+      "minLength": 2,
+      "maxLength": 38
     }
   }
 }

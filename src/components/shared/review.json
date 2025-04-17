@@ -2,7 +2,8 @@
   "collectionName": "components_shared_reviews",
   "info": {
     "displayName": "review",
-    "icon": "quote"
+    "icon": "quote",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -10,13 +11,13 @@
       "type": "string",
       "required": true,
       "minLength": 3,
-      "maxLength": 60
+      "maxLength": 40
     },
     "review": {
       "type": "text",
       "required": true,
       "minLength": 8,
-      "maxLength": 300
+      "maxLength": 370
     },
     "source": {
       "type": "enumeration",

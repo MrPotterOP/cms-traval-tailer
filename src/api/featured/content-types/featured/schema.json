@@ -31,10 +31,10 @@
       "relation": "oneToMany",
       "target": "api::tour.tour"
     },
-    "spotlights": {
+    "traveller": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::spotlight.spotlight"
+      "target": "api::experience.experience"
     }
   }
 }

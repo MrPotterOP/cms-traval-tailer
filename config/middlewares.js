@@ -19,5 +19,9 @@ module.exports = [
         },
       },
     },
+    name: 'strapi::cors',
+    config: {
+      origin: ['https://traveltailor.in'],
+    }
   }
 ];
