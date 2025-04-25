@@ -612,12 +612,12 @@ module.exports = {
                 body: JSON.stringify({
                     "sender":{  
                         "name":"Travel Tailore",
-                        "email": process.env.MAIL_SENDER
-                    },
+                        "email": process.env.MAIL_SENDER || 'traveltailor.dev@gmail.com'
+                     },
                     "to":[  
                         {  
-                            "email":"shubham.ubarhande69@gmail.com",
-                            "name":"John Doe"
+                            "email": process.env.MAIL_RECEIVER || 'traveltailor.dev@gmail.com',
+                            "name": process.env.MAIL_RECEIVER_NAME || 'Travel Tailore'
                         }
                     ],
                     "subject":"Website Contact Form | New Enquiry | " + name,
