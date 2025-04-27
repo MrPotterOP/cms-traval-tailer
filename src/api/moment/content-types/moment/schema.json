@@ -4,13 +4,14 @@
   "info": {
     "singularName": "moment",
     "pluralName": "moments",
-    "displayName": "Moment"
+    "displayName": "Moment",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "moment": {
+    "moments": {
       "type": "component",
       "repeatable": true,
       "component": "shared.moments"

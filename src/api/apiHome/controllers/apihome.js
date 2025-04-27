@@ -8,12 +8,14 @@ module.exports = {
             const featured = await strapi.service('api::api-home.apihome').getFeatured();
             const months = await strapi.service('api::api-home.apihome').getMonths();
             const reviews = await strapi.service('api::api-home.apihome').getReviews();
+            const moments = await strapi.service('api::api-home.apihome').getMoments();
 
             ctx.body = {
                 hero,
                 ...featured,
                 months: [...months.months],
-                reviews: [...reviews.reviews]
+                reviews: [...reviews.reviews],
+                moments: [...moments.moments]
             }
         } catch (e) {
             ctx.status = 500;

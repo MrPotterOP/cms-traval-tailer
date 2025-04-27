@@ -4,7 +4,10 @@ const transformBlog = (blog) => {
     if (!blog) return null;
 
     const author = () =>{
-        if(blog.createdBy){
+        if(blog.author){
+            return blog.author
+        }
+        else if(blog.createdBy){
             return `${blog.createdBy?.firstname} ${blog.createdBy?.lastname}`
         }else {
             return "Admin - Travel Tailor"
@@ -17,9 +20,9 @@ const transformBlog = (blog) => {
         displayImg: blog.displayImg?.formats?.large?.url || blog.displayImg?.url || DEFAULT_IMAGE,
         body: blog.body,
         seo: {
-            metaTitle: blog.seo?.metaTitle,
-            metaDescription: blog.seo?.metaDescription,
-            shareImage: blog.seo?.shareImage?.url || DEFAULT_IMAGE
+            metaTitle: blog.seo?.metaTitle || blog.title,
+            metaDescription: blog.seo?.metaDescription || blog.description,
+            shareImage: blog.seo?.shareImage?.url || blog.displayImg?.formats?.large?.url || blog.displayImg?.url || DEFAULT_IMAGE
         },
         author: author(),
         createdAt: blog.createdAt,

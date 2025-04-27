@@ -96,7 +96,7 @@ module.exports = {
 
         // sort months like january, february, march ans so on
         response.months.sort((a, b) => {
-            const monthOrder = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+            const monthOrder = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             return monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month);
         });
 
@@ -110,6 +110,27 @@ module.exports = {
 
         const response = {
             reviews: reviews[0]?.review ? transformEntities(reviews[0].review, 'reviews') : []
+        };
+        
+
+        return response;
+    },
+
+    async getMoments() {
+        const moments = await strapi.documents("api::moment.moment").findMany({
+            populate: {
+                moments: {
+                    populate: {
+                        img: {
+                            populate: "*"
+                        }
+                    }
+                },
+            },
+        });
+
+        const response = {
+            moments: moments[0]?.moments ? transformEntities(moments[0].moments, 'moments') : []
         };
         
 
@@ -310,7 +331,7 @@ module.exports = {
         try {
             // Single API call using the determined field
             docs = await strapi.documents(`api::${type}.${type}`).findMany({
-                fields: [fieldToFetch], 
+                fields: [fieldToFetch, 'updatedAt'],
             });
     
 
@@ -322,6 +343,7 @@ module.exports = {
 
             const slugs = docs.map((doc) => ({
                 slug: doc[fieldToFetch],
+                updatedAt: doc.updatedAt
             }));
     
             return slugs;

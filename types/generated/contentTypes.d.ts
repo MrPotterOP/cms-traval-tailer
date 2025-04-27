@@ -386,6 +386,7 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    author: Schema.Attribute.String;
     blog: Schema.Attribute.Relation<'manyToOne', 'api::blog.blog'>;
     blogs: Schema.Attribute.Relation<'oneToMany', 'api::blog.blog'>;
     body: Schema.Attribute.RichText & Schema.Attribute.Required;
@@ -838,6 +839,7 @@ export interface ApiListTourListTour extends Struct.SingleTypeSchema {
 export interface ApiMomentMoment extends Struct.SingleTypeSchema {
   collectionName: 'moments';
   info: {
+    description: '';
     displayName: 'Moment';
     pluralName: 'moments';
     singularName: 'moment';
@@ -855,7 +857,7 @@ export interface ApiMomentMoment extends Struct.SingleTypeSchema {
       'api::moment.moment'
     > &
       Schema.Attribute.Private;
-    moment: Schema.Attribute.Component<'shared.moments', true>;
+    moments: Schema.Attribute.Component<'shared.moments', true>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

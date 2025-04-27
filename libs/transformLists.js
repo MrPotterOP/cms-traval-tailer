@@ -53,13 +53,13 @@ const transformMonthList = (months) => {
     if (!months || !Array.isArray(months)) return [];
 
     const rawMonths = months.map(month => ({
-        month: month.month,
+        month: month.month.charAt(0).toUpperCase() + month.month.slice(1),
         imgUrl:  month.displayImg?.formats?.medium?.url || month.displayImg?.url || DEFAULT_IMAGE
     }));
 
     // Sort months like january, february, march ans so on
     return rawMonths.sort((a, b) => {
-        const monthOrder = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+        const monthOrder = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         return monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month);
     });
 }

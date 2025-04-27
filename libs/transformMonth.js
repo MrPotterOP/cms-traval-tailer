@@ -5,7 +5,8 @@ const transformMonth = (month) => {
     if (!month) return null;
 
     return {
-        title: month.month,
+        // capitalize first letter of month
+        title: month.month.charAt(0).toUpperCase() + month.month.slice(1),
         heroImg: month.heroImg?.url || DEFAULT_IMAGE,
         highlight: month.highlight ? {
             title: month.highlight.title,

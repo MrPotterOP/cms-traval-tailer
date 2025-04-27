@@ -194,11 +194,18 @@ export interface SharedMedia extends Struct.ComponentSchema {
 export interface SharedMoments extends Struct.ComponentSchema {
   collectionName: 'components_shared_moments';
   info: {
+    description: '';
     displayName: 'moments';
     icon: 'landscape';
   };
   attributes: {
-    moments: Schema.Attribute.Media<'images', true>;
+    altText: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+        minLength: 2;
+      }> &
+      Schema.Attribute.DefaultTo<'travel moment'>;
+    img: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
   };
 }
 

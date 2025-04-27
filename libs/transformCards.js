@@ -49,7 +49,7 @@ const transformTour = (tour) => ({
 
 // Months 
 const transformMonth = (month) => ({
-    month: month.month,
+    month: month.month.charAt(0).toUpperCase() + month.month.slice(1),
     imgUrl: month.displayImg?.formats?.medium?.url || month.displayImg?.url || DEFAULT_IMAGE,
 });
 
@@ -58,6 +58,13 @@ const transformReview = (review) => ({
     name: review.name,
     source: review.source,
     review: review.review,
+});
+
+// Moments
+const transformMoment = (moment) => ({
+    id: Math.random(),
+    alt: moment.altText,
+    src: moment.img?.formats?.large?.url || moment.img?.url || DEFAULT_IMAGE
 });
 
 // Generic transformation wrapper to apply the correct function based on entity type
@@ -78,6 +85,8 @@ const transformEntities = (items, type) => {
             return items.map(transformMonth);
         case 'reviews':
             return items.map(transformReview);
+        case 'moments':
+            return items.map(transformMoment);
         default:
             return [];
     }
@@ -89,5 +98,6 @@ module.exports = {
     transformDestination,
     transformExperience,
     transformSpotlight,
-    transformTour
+    transformTour,
+    transformMoment
 };

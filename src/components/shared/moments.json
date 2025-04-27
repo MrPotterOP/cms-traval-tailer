@@ -2,17 +2,25 @@
   "collectionName": "components_shared_moments",
   "info": {
     "displayName": "moments",
-    "icon": "landscape"
+    "icon": "landscape",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "moments": {
+    "img": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": true,
-      "required": false
+      ]
+    },
+    "altText": {
+      "type": "string",
+      "required": false,
+      "default": "travel moment",
+      "minLength": 2,
+      "maxLength": 100
     }
   }
 }
