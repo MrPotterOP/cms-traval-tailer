@@ -34,8 +34,12 @@ export interface SharedDays extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMaxLength<{
         minLength: 16;
       }>;
-    representiveImg: Schema.Attribute.Media<'images'> &
-      Schema.Attribute.Required;
+    representiveImg: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
   };
 }
 
