@@ -1018,10 +1018,10 @@ export interface ApiTourTour extends Struct.CollectionTypeSchema {
   };
   attributes: {
     blogs: Schema.Attribute.Relation<'manyToMany', 'api::blog.blog'>;
-    brief: Schema.Attribute.String &
+    brief: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
-        maxLength: 420;
+        maxLength: 440;
         minLength: 14;
       }>;
     createdAt: Schema.Attribute.DateTime;

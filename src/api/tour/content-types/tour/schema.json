@@ -58,10 +58,10 @@
       "required": true
     },
     "brief": {
-      "type": "string",
+      "type": "text",
       "required": true,
       "minLength": 14,
-      "maxLength": 420
+      "maxLength": 440
     },
     "days": {
       "displayName": "days",
