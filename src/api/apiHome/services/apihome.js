@@ -250,19 +250,19 @@ module.exports = {
                 heroImg: {
                     populate: "*"
                 },
-                experiences: {
+                tagExperiences: {
                     populate: "*"
                 },
-                blogs: {
+                tagBlogs: {
                     populate: "*"
                 },
-                tours: {
+                tagTours: {
                     populate: "*"
                 },
                 highlight: {
                     populate: "*"
                 },
-                destinations: {
+                tagDestinations: {
                     populate: "*"
                 },
             },
