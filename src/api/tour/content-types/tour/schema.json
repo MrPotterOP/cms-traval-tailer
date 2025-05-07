@@ -118,11 +118,11 @@
       "target": "api::destination.destination",
       "mappedBy": "tours"
     },
-    "months": {
+    "tagMonths": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::month.month",
-      "inversedBy": "tours"
+      "target": "api::blog.blog",
+      "inversedBy": "tagTours"
     }
   }
 }

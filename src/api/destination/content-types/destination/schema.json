@@ -81,11 +81,11 @@
       "target": "api::tour.tour",
       "inversedBy": "destinations"
     },
-    "months": {
+    "tagMonths": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::month.month",
-      "inversedBy": "destinations"
+      "inversedBy": "tagDestinations"
     }
   }
 }

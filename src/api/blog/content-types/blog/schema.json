@@ -89,11 +89,17 @@
     "author": {
       "type": "string"
     },
-    "months": {
+    "tagMonths": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::month.month",
-      "inversedBy": "blogs"
+      "inversedBy": "tagBlogs"
+    },
+    "tagTours": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tour.tour",
+      "mappedBy": "tagMonths"
     }
   }
 }

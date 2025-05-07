@@ -415,13 +415,14 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
     >;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::blog.blog'>;
-    months: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 4;
       }>;
+    tagMonths: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
+    tagTours: Schema.Attribute.Relation<'manyToMany', 'api::tour.tour'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -471,7 +472,6 @@ export interface ApiDestinationDestination extends Struct.CollectionTypeSchema {
       'api::destination.destination'
     > &
       Schema.Attribute.Private;
-    months: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String;
     spotlights: Schema.Attribute.Relation<
@@ -487,6 +487,7 @@ export interface ApiDestinationDestination extends Struct.CollectionTypeSchema {
         string
       > &
       Schema.Attribute.DefaultTo<'10000'>;
+    tagMonths: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -529,13 +530,13 @@ export interface ApiExperienceExperience extends Struct.CollectionTypeSchema {
       'api::experience.experience'
     > &
       Schema.Attribute.Private;
-    months: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String;
     spotlights: Schema.Attribute.Relation<
       'manyToMany',
       'api::spotlight.spotlight'
     >;
+    tagMonths: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -877,19 +878,10 @@ export interface ApiMonthMonth extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    blogs: Schema.Attribute.Relation<'manyToMany', 'api::blog.blog'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    destinations: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::destination.destination'
-    >;
     displayImg: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    experiences: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::experience.experience'
-    >;
     heroImg: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     highlight: Schema.Attribute.Component<'shared.highlight', false> &
       Schema.Attribute.Required;
@@ -915,7 +907,15 @@ export interface ApiMonthMonth extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required;
     monthTag: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    tours: Schema.Attribute.Relation<'manyToMany', 'api::tour.tour'>;
+    tagBlogs: Schema.Attribute.Relation<'manyToMany', 'api::blog.blog'>;
+    tagDestinations: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::destination.destination'
+    >;
+    tagExperiences: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::experience.experience'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1052,7 +1052,6 @@ export interface ApiTourTour extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::tour.tour'>;
     moments: Schema.Attribute.Component<'shared.moments', false>;
-    months: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
     place: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1071,6 +1070,7 @@ export interface ApiTourTour extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::spotlight.spotlight'
     >;
+    tagMonths: Schema.Attribute.Relation<'manyToMany', 'api::blog.blog'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
