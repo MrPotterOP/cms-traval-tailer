@@ -72,6 +72,12 @@
       "relation": "manyToMany",
       "target": "api::experience.experience",
       "mappedBy": "tagMonths"
+    },
+    "tagTours": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tour.tour",
+      "mappedBy": "tagMonths"
     }
   }
 }

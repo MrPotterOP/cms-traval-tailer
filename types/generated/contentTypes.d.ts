@@ -422,7 +422,6 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
         minLength: 4;
       }>;
     tagMonths: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
-    tagTours: Schema.Attribute.Relation<'manyToMany', 'api::tour.tour'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -916,6 +915,7 @@ export interface ApiMonthMonth extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::experience.experience'
     >;
+    tagTours: Schema.Attribute.Relation<'manyToMany', 'api::tour.tour'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1070,7 +1070,7 @@ export interface ApiTourTour extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::spotlight.spotlight'
     >;
-    tagMonths: Schema.Attribute.Relation<'manyToMany', 'api::blog.blog'>;
+    tagMonths: Schema.Attribute.Relation<'manyToMany', 'api::month.month'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{

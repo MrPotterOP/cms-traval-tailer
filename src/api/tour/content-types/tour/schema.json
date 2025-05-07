@@ -121,7 +121,7 @@
     "tagMonths": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::blog.blog",
+      "target": "api::month.month",
       "inversedBy": "tagTours"
     }
   }
