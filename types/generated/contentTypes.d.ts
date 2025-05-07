@@ -913,6 +913,7 @@ export interface ApiMonthMonth extends Struct.CollectionTypeSchema {
       ]
     > &
       Schema.Attribute.Required;
+    monthTag: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     tours: Schema.Attribute.Relation<'manyToMany', 'api::tour.tour'>;
     updatedAt: Schema.Attribute.DateTime;

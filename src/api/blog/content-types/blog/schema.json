@@ -69,12 +69,6 @@
       "target": "api::tour.tour",
       "inversedBy": "blogs"
     },
-    "months": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::month.month",
-      "mappedBy": "blogs"
-    },
     "blogs": {
       "type": "relation",
       "relation": "oneToMany",
@@ -94,6 +88,12 @@
     },
     "author": {
       "type": "string"
+    },
+    "months": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::month.month",
+      "inversedBy": "blogs"
     }
   }
 }
