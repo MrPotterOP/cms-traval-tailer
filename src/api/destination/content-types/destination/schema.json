@@ -85,7 +85,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::month.month",
-      "inversedBy": "destinations"
+      "mappedBy": "destinations"
     }
   }
 }

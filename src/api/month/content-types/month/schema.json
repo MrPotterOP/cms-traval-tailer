@@ -55,29 +55,29 @@
       "type": "string",
       "required": true
     },
-    "blogs": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::blog.blog",
-      "mappedBy": "months"
-    },
     "destinations": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::destination.destination",
-      "mappedBy": "months"
+      "inversedBy": "months"
+    },
+    "blogs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog.blog",
+      "inversedBy": "months"
     },
     "experiences": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::experience.experience",
-      "mappedBy": "months"
+      "inversedBy": "months"
     },
     "tours": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::tour.tour",
-      "mappedBy": "months"
+      "inversedBy": "months"
     }
   }
 }
