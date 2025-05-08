@@ -166,7 +166,7 @@ module.exports = {
             experiences: {
                 populate: "*"
             },
-            months: {
+            tagMonths: {
                 populate: "*"
             },
             spotlights: {
@@ -277,10 +277,10 @@ module.exports = {
 
         return {
             ...transformMonth(monthDoc),
-            tours: transformEntities(monthDoc.tours, 'tours'),
-            experiences: transformEntities(monthDoc.experiences, 'experiences'),
-            blogs: transformEntities(monthDoc.blogs, 'blogs'),
-            destinations: transformEntities(monthDoc.destinations, 'destinations')
+            tours: transformEntities(monthDoc.tagTours, 'tours'),
+            experiences: transformEntities(monthDoc.tagExperiences, 'experiences'),
+            blogs: transformEntities(monthDoc.tagBlogs, 'blogs'),
+            destinations: transformEntities(monthDoc.tagDestinations, 'destinations')
         };
     },
 
