@@ -48,16 +48,35 @@ module.exports = [
             // 'https://storage.googleapis.com/[YOUR_BUCKET_NAME]/', // Replace with your actual bucket name
             'https://backend.traveltailor.in', // Your backend domain
             'https://traveltailor.in', // Your frontend domain
+
+            "*.tinymce.com",
+            "*.tiny.cloud",
+            "dl.airtable.com",
+            "strapi.io",
+            "s3.amazonaws.com",
+            "cdn.jsdelivr.net",
           ],
+
+          "script-src": ["'self'", "*.tinymce.com", "*.tiny.cloud", "https:"],
+          "connect-src": ["'self'", "*.tinymce.com", "*.tiny.cloud", "blob:", "*.strapi.io"],
+
+          "style-src": [
+            "'self'",
+            "'unsafe-inline'",
+            "*.tinymce.com",
+            "*.tiny.cloud",
+          ],
+          "font-src": ["'self'", "*.tinymce.com", "*.tiny.cloud"],
           // Add other directives as needed (e.g., 'script-src', 'connect-src')
         },
+        upgradeInsecureRequests: null,
       },
     },
   },
   { // This object configures the strapi::cors middleware
     name: 'strapi::cors',
     config: {
-      origin: ['https://traveltailor.in', 'https://backend.traveltailor.in'], // Include both frontend and backend if necessary
+      origin: ['https://traveltailor.in', 'https://backend.traveltailor.in', 'http://localhost:3000', 'http://localhost:1337'], // Include both frontend and backend if necessary
       headers: '*', // Or specify allowed headers
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'], // Or specify allowed methods
     },

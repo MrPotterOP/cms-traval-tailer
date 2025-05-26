@@ -19,6 +19,7 @@ const transformBlog = (blog) => {
         description: blog.description,
         displayImg: blog.displayImg?.formats?.large?.url || blog.displayImg?.url || DEFAULT_IMAGE,
         body: blog.body,
+        bodyAlt: blog.bodyAlt,
         seo: {
             metaTitle: blog.seo?.metaTitle || blog.title,
             metaDescription: blog.seo?.metaDescription || blog.description,

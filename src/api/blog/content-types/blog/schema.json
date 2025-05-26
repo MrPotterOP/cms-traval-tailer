@@ -49,7 +49,7 @@
     },
     "body": {
       "type": "richtext",
-      "required": true
+      "required": false
     },
     "destinations": {
       "type": "relation",
@@ -94,6 +94,10 @@
       "relation": "manyToMany",
       "target": "api::month.month",
       "inversedBy": "tagBlogs"
+    },
+    "bodyAlt": {
+      "type": "customField",
+      "customField": "plugin::tinymce.tinymce"
     }
   }
 }

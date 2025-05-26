@@ -61,6 +61,54 @@ module.exports = ({ env }) => {
       },
       "seo": {
         "enable": true,
-    },
+      },
+      "tinymce": {
+        "enable": true,
+         config: {
+            editor: {
+                outputFormat: "html",
+                editorConfig: {
+                    height: 500,
+                    menubar: false,
+                    extended_valid_elements: "span, img, small",
+                    forced_root_block: "",
+                    convert_urls: false,
+                    entity_encoding: "raw",
+                    plugins:
+                        "advlist autolink lists link image charmap preview anchor \
+                        searchreplace visualblocks code fullscreen table emoticons nonbreaking \
+                        insertdatetime media table code help wordcount",
+                    toolbar:
+                        "undo redo | styles | bold italic | bullist numlist \
+                        alignleft aligncenter alignright alignjustify | \
+                        media table emoticons visualblocks code|\
+                        nonbreaking outdent indent | removeformat | help",
+                    style_formats: [
+                        {
+                            title: "Headings",
+                            items: [
+                                { title: "Heading 2", block: "h2" },
+                                { title: "Heading 3", block: "h3" },
+                                { title: "Heading 4", block: "h4" },
+                                { title: "Heading 5", block: "h5" },
+                                { title: "Heading 6", block: "h6" },
+                            ],
+                        },
+
+                        {
+                            title: "Text",
+                            items: [
+                                { title: "Paragraph", block: "p" },
+                                {
+                                    title: "Paragraph with small letters",
+                                    block: "small",
+                                },
+                            ],
+                        },
+                    ],
+                },
+            },
+        }
+      }
     };
   };
