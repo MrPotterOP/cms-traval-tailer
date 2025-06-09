@@ -102,6 +102,7 @@ export interface SharedHero extends Struct.ComponentSchema {
     icon: 'landscape';
   };
   attributes: {
+    blog: Schema.Attribute.Relation<'oneToOne', 'api::blog.blog'>;
     CTA: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{

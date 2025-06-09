@@ -27,6 +27,9 @@ module.exports = {
                         experience: {
                             fields: ['slug']
                         },
+                        blog: {
+                            fields: ['slug']
+                        },
                         heroImg: "*",
                     }
                 }
@@ -41,7 +44,7 @@ module.exports = {
             title: slide.title,
             description: slide.description,
             imgUrl: slide.heroImg?.url || DEFAULT_IMAGE,
-            url: slide.tour?.slug ? `/tours/${slide.tour.slug}` : slide.destination?.slug ? `/destinations/${slide.destination.slug}` : `/experiences/${slide.experience?.slug}`,
+            url: slide.tour?.slug ? `/tours/${slide.tour.slug}` : slide.destination?.slug ? `/destinations/${slide.destination.slug}` : slide.experience?.slug ? `/experiences/${slide.experience?.slug}` : `/blogs/${slide.blog?.slug}`,
             CTA: slide.CTA || 'Explore'
         }));
 
