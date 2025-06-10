@@ -125,6 +125,7 @@ export interface SharedHero extends Struct.ComponentSchema {
       'api::experience.experience'
     >;
     heroImg: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    month: Schema.Attribute.Relation<'oneToOne', 'api::month.month'>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{

@@ -30,6 +30,9 @@ module.exports = {
                         blog: {
                             fields: ['slug']
                         },
+                        month: {
+                            fields: ['month']
+                        },
                         heroImg: "*",
                     }
                 }
@@ -38,13 +41,31 @@ module.exports = {
 
         // Flatten all heroSlide arrays into a single array, defaulting to empty array if heroSlide is missing
         const allSlides = heroDocuments.flatMap(hero => hero.heroSlide || []);
+        const getUrl = (slide) => {
+
+            if (slide.tour?.slug) {
+                return `/tours/${slide.tour.slug}`;
+            } else if (slide.destination?.slug) {
+                return `/destinations/${slide.destination.slug}`;
+            } else if (slide.experience?.slug) {
+                return `/experiences/${slide.experience?.slug}`;
+            } else if (slide.blog?.slug) {
+                return `/blogs/${slide.blog?.slug}`;
+            } else if (slide.month?.month) {
+                const lowerCaseMonth = slide.month.month;
+                return `/calendar/${lowerCaseMonth.charAt(0).toUpperCase() + lowerCaseMonth.slice(1)}`;
+            } else {
+                return '/';
+            }
+
+        }
 
         // Map each slide to the desired format
         const result = allSlides.map(slide => ({
             title: slide.title,
             description: slide.description,
             imgUrl: slide.heroImg?.url || DEFAULT_IMAGE,
-            url: slide.tour?.slug ? `/tours/${slide.tour.slug}` : slide.destination?.slug ? `/destinations/${slide.destination.slug}` : slide.experience?.slug ? `/experiences/${slide.experience?.slug}` : `/blogs/${slide.blog?.slug}`,
+            url: getUrl(slide),
             CTA: slide.CTA || 'Explore'
         }));
 
