@@ -192,9 +192,30 @@ module.exports = {
             ctx.body = createdLead;
         } catch (e) {
             ctx.status = 500;
-            console.log(e);
 
             ctx.body = {error: "Failed to create lead."};
+        }
+    },
+
+    async contact(ctx) {
+        const {
+            name,
+            email,
+            contactNumber,
+            requirement
+        } = ctx.request.body;
+
+        if (!name || !email || !contactNumber) {
+            ctx.throw(400, "Missing required fields: name, email, contactNumber");
+        }
+
+        try {
+            const createdContact = await strapi.service('api::api-home.apihome').createContact(name, email, contactNumber, requirement);
+            ctx.body = createdContact;
+        } catch (e) {
+            ctx.status = 500;
+
+            ctx.body = {error: "Failed to create contact."};
         }
     },
     

@@ -61,6 +61,11 @@ module.exports = {
             handler: 'apihome.lead'
         },
         {
+            method: 'POST',
+            path: '/apiHome/contact',
+            handler: 'apihome.contact'
+        },
+        {
             method: 'GET',
             path: '/apiHome/blog/:slug',
             handler: 'apihome.blog'

@@ -682,6 +682,119 @@ module.exports = {
 
     },
 
+    async createContact(name, email, contactNumber, requirement) {
+
+        try {
+            // Create the contact entry in the database
+            const contact = await strapi.documents("api::contact.contact").create({
+                data: {
+                    name,
+                    email,
+                    contactNumber,
+                    requirement,
+                    publishedAt: new Date(),
+                }
+            });
+
+            
+            let response = {
+                message: "Contact created successfully",
+                id: contact.id,
+                documentId: contact.documentId
+            };
+
+            const formatContact = (code, number) => {
+                if (!number) return ''; // If no number, return empty string
+                return `${code ? code + ' ' : ''}${number}`; // Add code if it exists
+            }
+            
+            const htmlContent = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>New Website Submission</title>
+                <style>
+                                /* Basic Reset & Body Styling */
+                body { margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333333; background-color: #f4f7f6; }
+                /* Container */
+                .container { width: 100%; max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e0e0e0;}
+                /* Header */
+                .header { background-color: #D35400; /* Rich Orange */ color: #ffffff; padding: 25px; text-align: center; }
+                .header h1 { margin: 0; font-size: 24px; font-weight: 500; }
+                /* Content Area */
+                .content { padding: 30px; }
+                .content h2 { font-size: 20px; color: #D35400; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px;}
+                /* Data Table */
+                .data-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
+                .data-table th, .data-table td { text-align: left; padding: 12px 0; border-bottom: 1px solid #eeeeee; vertical-align: top; }
+                .data-table th { color: #555555; font-weight: 600; width: 120px; /* Fixed width for labels */ }
+                .data-table td { color: #333333; }
+                /* Comment Section */
+                .comment-section { margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #D35400; border-radius: 4px; }
+                .comment-label { font-weight: 600; color: #D35400; margin-bottom: 8px; display: block; font-size: 16px;}
+                .comment-text { margin: 0; color: #555; white-space: pre-wrap; /* Preserve line breaks */ word-wrap: break-word;}
+                /* Footer */
+                .footer { text-align: center; padding: 20px; font-size: 12px; color: #999999; background-color: #f4f7f6;}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>New Website Enquiry</h1>
+                    </div>
+                    <div class="content">
+                        <h2>Submitter Details</h2>
+                        <table class="data-table">
+                            ${name ? `<tr><th>Name</th><td>${name}</td></tr>` : ''}
+                            ${email ? `<tr><th>Email</th><td><a href="mailto:${email}" style="color: #4A90E2; text-decoration: none;">${email}</a></td></tr>` : ''}
+                            ${contactNumber ? `<tr><th>Contact</th><td>${contactNumber}</td></tr>` : ''}
+                        </table>
+            
+                        ${requirement ? `<h2>Requirement</h2>` : ''}
+                        <table class="data-table">
+                            ${requirement ? `<tr><th>Requirement</th><td>${requirement}</td></tr>` : ''}
+                        </table>
+                    </div>
+                    <div class="footer">
+                        This is an automated notification from your website.
+                    </div>
+                </div>
+            </body>
+            </html>
+            `;
+            
+
+            const sendEmail = await fetch(`${process.env.MAIL_API_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'api-key': process.env.MAIL_API_KEY,
+                    'accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    "sender":{  
+                        "name":"Travel Tailore",
+                        "email": process.env.MAIL_SENDER || 'traveltailor.dev@gmail.com'
+                     },
+                    "to":[  
+                        {  
+                            "email": process.env.MAIL_RECEIVER || 'traveltailor.dev@gmail.com',
+                            "name": process.env.MAIL_RECEIVER_NAME || 'Travel Tailore'
+                        }
+                    ],
+                    "subject":"Website Contact Form | New Enquiry | " + name,
+                    "htmlContent": htmlContent
+                })
+            });        
+        } catch (e) {
+            console.log(e, "inside");
+            ctx.status = 500;
+            ctx.body = {error: "Failed to create contact."};
+        }
+    },
+
     async getBlog(slug) {
         const blog = await strapi.documents("api::blog.blog").findFirst({
             filters: { slug },
