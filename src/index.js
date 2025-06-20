@@ -25,11 +25,18 @@ module.exports = {
 
         context.params.data.slug = slugify(data.title, {lower: true});
 
-        // context.params.data.slug = data.title.toLowerCase().replace(/\s+/g, '-');
+        const ctx = strapi.requestContext.get();
+        const user = ctx?.state?.user;
+
+        if(context.uid === "api::blog.blog" && context.action === "create") {
+          context.params.data.author = context.params.data.author || `${user.firstname || ""} ${user.lastname || ""}`;
+        }
 
         return next();
       }
     );
+
+
   },
 
   /**
