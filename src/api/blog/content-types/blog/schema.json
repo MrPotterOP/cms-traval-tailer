@@ -98,6 +98,12 @@
     "bodyAlt": {
       "type": "customField",
       "customField": "plugin::tinymce.tinymce"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "mappedBy": "blogs"
     }
   }
 }
