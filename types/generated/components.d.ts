@@ -1,5 +1,55 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface CampHero extends Struct.ComponentSchema {
+  collectionName: 'components_camp_heroes';
+  info: {
+    displayName: 'hero';
+  };
+  attributes: {
+    img: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 220;
+      }>;
+  };
+}
+
+export interface CampMoment extends Struct.ComponentSchema {
+  collectionName: 'components_camp_moments';
+  info: {
+    displayName: 'moment';
+  };
+  attributes: {
+    description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    img: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 140;
+      }>;
+  };
+}
+
+export interface CampPlan extends Struct.ComponentSchema {
+  collectionName: 'components_camp_plans';
+  info: {
+    displayName: 'plan';
+  };
+  attributes: {
+    img: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+  };
+}
+
 export interface ExpGroup extends Struct.ComponentSchema {
   collectionName: 'components_exp_groups';
   info: {
@@ -16,6 +66,43 @@ export interface ExpGroup extends Struct.ComponentSchema {
       Schema.Attribute.Unique &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 140;
+        minLength: 2;
+      }>;
+  };
+}
+
+export interface OnceReview extends Struct.ComponentSchema {
+  collectionName: 'components_once_reviews';
+  info: {
+    description: '';
+    displayName: 'Review';
+    icon: 'discuss';
+  };
+  attributes: {
+    date: Schema.Attribute.Date & Schema.Attribute.Required;
+    img: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+        minLength: 2;
+      }>;
+    place: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 30;
+        minLength: 2;
+      }>;
+    review: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 240;
+        minLength: 2;
+      }>;
+    travelType: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 30;
         minLength: 2;
       }>;
   };
@@ -356,7 +443,11 @@ export interface TourGroup extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'camp.hero': CampHero;
+      'camp.moment': CampMoment;
+      'camp.plan': CampPlan;
       'exp.group': ExpGroup;
+      'once.review': OnceReview;
       'shared.days': SharedDays;
       'shared.excluded': SharedExcluded;
       'shared.featured-places': SharedFeaturedPlaces;

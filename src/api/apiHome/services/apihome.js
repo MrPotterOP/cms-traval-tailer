@@ -4,8 +4,9 @@ const { transformDestination } = require('../../../../libs/transformDestination.
 const { transformMonth } = require('../../../../libs/transformMonth.js');
 const { destination } = require('../controllers/apihome.js');
 const { transformExperience } = require('../../../../libs/transformExperience.js');
-const { transformDestinationList, transformExperienceList, transformTourList, transformMonthList } = require('../../../../libs/transformLists.js');
+const { transformDestinationList, transformExperienceList, transformTourList, transformMonthList, transformBlogList } = require('../../../../libs/transformLists.js');
 const { serchCardBlog, serchCardDestination, serchCardExperience, serchCardTour } = require('../../../../libs/transformSearch.js');
+const { transformCampaign } = require('../../../../libs/transformCampaign.js');
 const { transformBlog } = require('../../../../libs/transformBlog.js');
 
 const DEFAULT_IMAGE = '/uploads/failed_bc13306774.png';
@@ -128,12 +129,29 @@ module.exports = {
     },
 
     async getReviews() {
-        const reviews = await strapi.documents("api::review.review").findMany({
-            populate: "*",
+        // const reviews = await strapi.documents("api::review.review").findMany({
+        //     populate: "*",
+        // });
+
+        // const response = {
+        //     reviews: reviews[0]?.review ? transformEntities(reviews[0].review, 'reviews') : []
+        // };
+
+        const testimonials = await strapi.documents("api::testimonial.testimonial").findMany({
+            populate: {
+                review: {
+                    populate: "*"
+                }
+            },
         });
 
+        console.log(testimonials[0].review, "testimonials");
+        
+
+        // const response = testimonials[0]?.review ? transformEntities(testimonials[0].review, 'reviews') : [];
+
         const response = {
-            reviews: reviews[0]?.review ? transformEntities(reviews[0].review, 'reviews') : []
+            reviews: testimonials[0]?.review ? transformEntities(testimonials[0].review, 'reviews') : []
         };
         
 
@@ -471,6 +489,27 @@ module.exports = {
         };
     },
 
+    async getListBlogs() {
+        const listBlogs = await strapi.documents("api::category.category").findMany({
+            populate: {
+                fields: ["tag", "description"],
+                blogs: {
+                    populate: {
+                        fields: ["title", "slug", "description"],
+                        displayImg: "*"
+                    }
+                }
+            },
+        });
+    
+        if (!listBlogs) {
+            throw new Error("List blogs not found.");
+        }
+        return {
+            list: transformBlogList(listBlogs),
+        };
+    },
+
 
 
     async getSearch(query) {
@@ -789,7 +828,6 @@ module.exports = {
                 })
             });        
         } catch (e) {
-            console.log(e, "inside");
             ctx.status = 500;
             ctx.body = {error: "Failed to create contact."};
         }
@@ -841,6 +879,179 @@ module.exports = {
             tours: transformEntities(blog.tours, 'tours')
         };
     },
+
+    async getCampaign(slug) {
+        const campaign = await strapi.documents("api::campaign.campaign").findFirst({
+            filters: { slug },
+            populate: { 
+                destinations: {
+                    populate: {
+                        displayImg: {
+                            fields: ["url"]
+                        }
+                    },
+                    fields: ["title", "description", "slug", "startingPrice"]
+                },
+                hero: {
+                    populate: {
+                        img: {
+                            fields: ["url"]
+                        }
+                    },
+                    fields: ["title"]
+                },
+                moments: {
+                    populate: {
+                        img: {
+                            fields: ["url"]
+                        }
+                    },
+                    fields: ["title", "description"]
+                },
+                plans: {
+                    populate: {
+                        img: {
+                            fields: ["url"]
+                        }
+                    },
+                    fields: ["title"]
+                },
+                testimonials: {
+                    populate: {
+                        img: {
+                            fields: ["url"]
+                        }
+                    },
+                    fields: ["name", "place", "travelType", "date", "review"]
+                }
+            },
+            fields: ["title", "slug"]
+        });
+        if (!campaign) {
+            throw new Error("Campaign not found.");
+        }
+        return {
+            ...transformCampaign(campaign),
+        };
+    },
+
+    async postCampaignForm(name, email, contact, travelDate, destinations, needsHelp) {
+        try {
+            // Create the campaign entry in the database
+            const campaignForm = await strapi.documents("api::campaign-form.campaign-form").create({
+                data: {
+                    name,
+                    email,
+                    contact,
+                    travelDate,
+                    destinations,
+                    needsHelp,
+                    publishedAt: new Date(),
+                }
+            });
+            
+            let response = {
+                message: "Campaign created successfully",
+                id: campaignForm.id,
+                documentId: campaignForm.documentId
+            };
+
+
+            const htmlContent = `
+                <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>New Travel Enquiry</title>
+                        <style>
+                            /* Basic Reset & Body Styling */
+                            body { margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333333; background-color: #f4f7f6; }
+                            /* Container */
+                            .container { width: 100%; max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e0e0e0;}
+                            /* Header */
+                            .header { background-color: #ED5628; /* Travel Blue */ color: #ffffff; padding: 25px; text-align: center; }
+                            .header h1 { margin: 0; font-size: 24px; font-weight: 500; }
+                            /* Content Area */
+                            .content { padding: 30px; }
+                            .content h2 { font-size: 20px; color: #ED5628; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px;}
+                            /* Data Table */
+                            .data-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
+                            .data-table th, .data-table td { text-align: left; padding: 12px 0; border-bottom: 1px solid #eeeeee; vertical-align: top; }
+                            .data-table th { color: #555555; font-weight: 600; width: 120px; /* Fixed width for labels */ }
+                            .data-table td { color: #333333; }
+                            /* Help Section */
+                            .help-section { margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #ED5628; border-radius: 4px; }
+                            .help-label { font-weight: 600; color: #ED5628; margin-bottom: 8px; display: block; font-size: 16px;}
+                            .help-text { margin: 0; color: #555; white-space: pre-wrap; /* Preserve line breaks */ word-wrap: break-word;}
+                            /* Footer */
+                            .footer { text-align: center; padding: 20px; font-size: 12px; color: #999999; background-color: #f4f7f6;}
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <div class="header">
+                                <h1>New Travel Enquiry</h1>
+                            </div>
+                            <div class="content">
+                                <h2>Customer Details</h2>
+                                <table class="data-table">
+                                    ${name ? `<tr><th>Name</th><td>${name}</td></tr>` : ''}
+                                    ${email ? `<tr><th>Email</th><td><a href="mailto:${email}" style="color: #4A90E2; text-decoration: none;">${email}</a></td></tr>` : ''}
+                                    ${contact ? `<tr><th>Contact</th><td>${contact}</td></tr>` : ''}
+                                </table>
+                                
+                                <h2>Travel Information</h2>
+                                <table class="data-table">
+                                    ${travelDate ? `<tr><th>Travel Date</th><td>${travelDate}</td></tr>` : ''}
+                                    ${destinations ? `<tr><th>Destinations</th><td>${destinations}</td></tr>` : ''}
+                                </table>
+                                
+                                ${needsHelp ? `
+                                <div class="help-section">
+                                    <span class="help-label">Needs Help Deciding Destinations?</span>
+                                    <p class="help-text">${needsHelp}</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                            <div class="footer">
+                                This is an automated notification from your travel website.
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+        `;
+
+        const sendEmail = await fetch(`${process.env.MAIL_API_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'api-key': process.env.MAIL_API_KEY,
+                    'accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    "sender":{  
+                        "name":"Travel Tailore",
+                        "email": process.env.MAIL_SENDER || 'traveltailor.dev@gmail.com'
+                     },
+                    "to":[  
+                        {  
+                            "email": process.env.MAIL_RECEIVER || 'traveltailor.dev@gmail.com',
+                            "name": process.env.MAIL_RECEIVER_NAME || 'Travel Tailore'
+                        }
+                    ],
+                    "subject":"Website Contact Form | New Enquiry | " + name,
+                    "htmlContent": htmlContent
+                })
+            });
+
+            return response;
+        } catch (error) {
+            throw(error.status || 500, error.message);
+        }
+    },
+
+
 
 
 }

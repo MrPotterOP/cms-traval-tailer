@@ -56,8 +56,12 @@ const transformMonth = (month) => ({
 // Reviews
 const transformReview = (review) => ({
     name: review.name,
-    source: review.source,
+    // source: review.source,
     review: review.review,
+    imgUrl: review.img?.formats?.large?.url || review.img?.url || DEFAULT_IMAGE,
+    place: review.place,
+    type: review.travelType,
+    date: review.date
 });
 
 // Moments

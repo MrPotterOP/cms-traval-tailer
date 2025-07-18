@@ -1,0 +1,47 @@
+{
+  "collectionName": "components_once_reviews",
+  "info": {
+    "displayName": "Review",
+    "icon": "discuss",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "minLength": 2,
+      "maxLength": 100
+    },
+    "place": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 30,
+      "required": true
+    },
+    "travelType": {
+      "type": "string",
+      "required": true,
+      "minLength": 2,
+      "maxLength": 30
+    },
+    "img": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "review": {
+      "type": "text",
+      "required": true,
+      "minLength": 2,
+      "maxLength": 240
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

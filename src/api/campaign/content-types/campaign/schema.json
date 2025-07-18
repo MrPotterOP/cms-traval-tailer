@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "campaigns",
+  "info": {
+    "singularName": "campaign",
+    "pluralName": "campaigns",
+    "displayName": "Campaign",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "hero": {
+      "displayName": "hero",
+      "type": "component",
+      "repeatable": true,
+      "component": "camp.hero",
+      "required": true
+    },
+    "plans": {
+      "displayName": "plan",
+      "type": "component",
+      "repeatable": true,
+      "component": "camp.plan",
+      "required": true
+    },
+    "moments": {
+      "displayName": "moment",
+      "type": "component",
+      "repeatable": true,
+      "component": "camp.moment",
+      "required": true
+    },
+    "destinations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::destination.destination"
+    },
+    "testimonials": {
+      "type": "component",
+      "repeatable": true,
+      "component": "once.review",
+      "required": true
+    },
+    "slug": {
+      "type": "string"
+    }
+  }
+}

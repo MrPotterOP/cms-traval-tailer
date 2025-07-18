@@ -8,14 +8,14 @@ module.exports = {
             const featured = await strapi.service('api::api-home.apihome').getFeatured();
             const months = await strapi.service('api::api-home.apihome').getMonths();
             const reviews = await strapi.service('api::api-home.apihome').getReviews();
-            const moments = await strapi.service('api::api-home.apihome').getMoments();
+            // const moments = await strapi.service('api::api-home.apihome').getMoments();
 
             ctx.body = {
                 hero,
                 ...featured,
                 months: [...months.months],
                 reviews: [...reviews.reviews],
-                moments: [...moments.moments]
+                // moments: [...moments.moments]
             }
         } catch (e) {
             ctx.status = 500;
@@ -135,6 +135,18 @@ module.exports = {
         }
     },
 
+    async listBlogs(ctx) {
+        try {
+            const listBlogs = await strapi.service('api::api-home.apihome').getListBlogs();
+            ctx.body = listBlogs;
+        } catch (e) {
+            ctx.status = 500;
+            console.log(e);
+
+            ctx.body = {error: "Failed to load list blogs"};
+        }
+    },
+
     async search(ctx) {
         try {
             const search = await strapi.service('api::api-home.apihome').getSearch(ctx.params.query);
@@ -228,6 +240,44 @@ module.exports = {
             console.log(e);
 
             ctx.body = {error: "Failed to load blog"};
+        }
+    },
+
+    async campaign(ctx) {
+        try {
+            const campaign = await strapi.service('api::api-home.apihome').getCampaign(ctx.params.slug);
+            ctx.body = campaign;
+        } catch (e) {
+            ctx.status = 500;
+            console.log(e);
+
+            ctx.body = {error: "Failed to load campaign"};
+        }
+    },
+
+    async campaignForm(ctx) {
+
+        const {
+            name,
+            email,
+            contact,
+            travelDate,
+            destinations,
+            needsHelp
+        } = ctx.request.body;
+
+        if (!name || !email || !contact) {
+            ctx.throw(400, "Missing required fields: name, email, contact");
+        }
+
+        try {
+            const campaignForm = await strapi.service('api::api-home.apihome').postCampaignForm(name, email, contact, travelDate, destinations, needsHelp);
+            ctx.body = campaignForm;
+        } catch (e) {
+            ctx.status = 500;
+            console.log(e);
+
+            ctx.body = {error: "Failed to load campaign"};
         }
     },
 }

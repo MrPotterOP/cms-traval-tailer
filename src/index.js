@@ -14,7 +14,7 @@ module.exports = {
     strapi.documents.use(
       async (context, next) => {
 
-        const pageTypes = ["api::blog.blog", "api::destination.destination", "api::experience.experience", "api::tour.tour"];
+        const pageTypes = ["api::blog.blog", "api::destination.destination", "api::experience.experience", "api::tour.tour", "api::campaign.campaign"];
         const pageActions = ["create", "update"];
 
         if(!pageTypes.includes(context.uid) || !pageActions.includes(context.action)) {
@@ -28,7 +28,7 @@ module.exports = {
         const ctx = strapi.requestContext.get();
         const user = ctx?.state?.user;
 
-        if(context.uid === "api::blog.blog" && context.action === "create") {
+        if(context.uid === "api::blog.blog" && pageActions.includes(context.action)) {
           context.params.data.author = context.params.data.author || `${user.firstname || ""} ${user.lastname || ""}`;
         }
 

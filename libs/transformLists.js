@@ -65,11 +65,28 @@ const transformMonthList = (months) => {
 }
 
 
+const transformBlogList = (listBlog) => {
+    if (!listBlog || !Array.isArray(listBlog)) return [];
+
+    return listBlog.map(list => ({
+        tag: list.tag,
+        description: list.description,
+        blogs: list.blogs.map(blog => ({
+            title: blog.title,
+            description: blog.description,
+            slug: blog.slug,
+            imgUrl: blog.displayImg?.formats.medium?.url || blog.displayImg?.url || DEFAULT_IMAGE
+        }))
+    }));
+};
+
+
 
 
 module.exports = {
     transformDestinationList,
     transformExperienceList,
     transformTourList,
-    transformMonthList
+    transformMonthList,
+    transformBlogList
 }

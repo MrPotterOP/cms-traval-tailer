@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "campaign_forms",
+  "info": {
+    "singularName": "campaign-form",
+    "pluralName": "campaign-forms",
+    "displayName": "Campaign Form",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "email": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "contact": {
+      "type": "string",
+      "maxLength": 20,
+      "required": true
+    },
+    "travelDate": {
+      "type": "string"
+    },
+    "destinations": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "needsHelp": {
+      "type": "string",
+      "maxLength": 20
+    }
+  }
+}

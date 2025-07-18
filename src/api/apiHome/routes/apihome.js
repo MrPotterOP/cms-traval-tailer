@@ -52,6 +52,11 @@ module.exports = {
         },
         {
             method: 'GET',
+            path: '/apiHome/blogs',
+            handler: 'apihome.listBlogs'
+        },
+        {
+            method: 'GET',
             path: '/apiHome/search/:query',
             handler: 'apihome.search'
         },
@@ -69,6 +74,16 @@ module.exports = {
             method: 'GET',
             path: '/apiHome/blog/:slug',
             handler: 'apihome.blog'
+        },
+        {
+            method: 'GET',
+            path: '/apiHome/campaign/:slug',
+            handler: 'apihome.campaign'
+        },
+        {
+            method: 'POST',
+            path: '/apiHome/campaign/form',
+            handler: 'apihome.campaignForm'
         }
     ]
 }
